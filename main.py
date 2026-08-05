@@ -7,14 +7,18 @@ INTERVAL = 300
 
 
 async def get_gram_price():
-    url = (
-        "https://coingecko.com"
-    )
+    # Используем альтернативный стабильный API без блокировок хостингов
+    url = "https://coincap.io"
     async with httpx.AsyncClient() as client:
         try:
             response = await client.get(url)
-            data = response.json()
-            return data.get("gram", {}).get("usd", None)
+            if response.status_code == 200:
+                data = response.json()
+                price = data.get("data", {}).get("priceUsd", None)
+                if price:
+                    # Округляем до двух знаков после запятой
+                    return round(float(price), 2)
+            return None
         except Exception as e:
             print(f"API Error: {e}")
             return None
@@ -49,4 +53,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-  
+    
