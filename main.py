@@ -8,7 +8,7 @@ INTERVAL = 300
 
 async def get_gram_price():
     # Прямой публичный фид без блокировок Cloudflare
-    url = "https://coinbase.com"
+    url = "https://coincap.io"
     async with httpx.AsyncClient() as client:
         try:
             response = await client.get(url, timeout=10.0)
