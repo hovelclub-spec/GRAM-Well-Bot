@@ -7,16 +7,15 @@ INTERVAL = 300
 
 
 async def get_gram_price():
-    # Используем альтернативный стабильный API без блокировок хостингов
-    url = "https://coincap.io"
+    # Прямой публичный фид без блокировок Cloudflare
+    url = "https://coinbase.com"
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url)
+            response = await client.get(url, timeout=10.0)
             if response.status_code == 200:
                 data = response.json()
-                price = data.get("data", {}).get("priceUsd", None)
+                price = data.get("data", {}).get("amount", None)
                 if price:
-                    # Округляем до двух знаков после запятой
                     return round(float(price), 2)
             return None
         except Exception as e:
@@ -30,7 +29,7 @@ async def main():
         price = await get_gram_price()
 
         if price is not None:
-            text = f"💎 **GRAM Live Price:** ${price}"
+            text = f"💎 **GRAM/TON Live Price:** ${price}"
 
             async with httpx.AsyncClient() as client:
                 api_url = f"https://telegram.org{TOKEN}/sendMessage"
@@ -53,4 +52,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-    
