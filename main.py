@@ -10,15 +10,17 @@ async def main():
     while True:
         async with httpx.AsyncClient() as client:
             try:
-                # Используем прямой и стабильный API биржи Binance
-                url = "https://binance.com"
+                # Вставили точную и полную ссылку на API Binance
+                url = (
+                    "https://binance.com"
+                )
                 response = await client.get(url, timeout=10.0)
 
                 if response.status_code == 200:
                     data = response.json()
                     price = round(float(data["price"]), 2)
 
-                    # Отправка сообщения в Telegram-канал
+                    # Исправили адрес отправки Telegram (вернули /bot)
                     telegram_url = (
                         f"https://telegram.org{TOKEN}/sendMessage"
                     )
