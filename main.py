@@ -21,9 +21,9 @@ async def main():
                     price = round(float(data["price"]), 2)
 
                     # Исправили адрес отправки Telegram (вернули /bot)
-                    telegram_url = (
-                        f"https://telegram.org{TOKEN}/sendMessage"
-                    )
+                   telegram_url = ( 
+                    f"https://api.telegram.org/bot{TOKEN}/sendMessage" 
+                )
                     payload = {
                         "chat_id": CHANNEL_ID,
                         "text": f"💎 **GRAM Live Price:** ${price}",
