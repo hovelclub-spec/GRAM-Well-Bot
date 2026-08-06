@@ -10,7 +10,6 @@ async def main():
     while True:
         async with httpx.AsyncClient() as client:
             try:
-                # Вставили точную и полную ссылку на API Binance
                 url = (
                     "https://binance.com"
                 )
@@ -20,10 +19,9 @@ async def main():
                     data = response.json()
                     price = round(float(data["price"]), 2)
 
-                    # Исправили адрес отправки Telegram (вернули /bot)
-                   telegram_url = ( 
-                    f"https://api.telegram.org/bot{TOKEN}/sendMessage" 
-                )
+                    telegram_url = (
+                        f"https://telegram.org{TOKEN}/sendMessage"
+                    )
                     payload = {
                         "chat_id": CHANNEL_ID,
                         "text": f"💎 **GRAM Live Price:** ${price}",
@@ -36,7 +34,6 @@ async def main():
             except Exception as error:
                 print(f"Error occurred: {error}")
 
-        # Ожидание 5 минут (300 секунд)
         await asyncio.sleep(300)
 
 
